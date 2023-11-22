@@ -10,7 +10,7 @@ class View
 {
     private $view;
     private $template;
-    public function __construct($view, $template)
+    public function __construct($view, $template = TEMPLATE_DEFAULT)
     {
         $this->view = $view;
         $this->template = $template;

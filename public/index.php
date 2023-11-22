@@ -1,6 +1,9 @@
 <?php
-require_once('../app/application.php');
-use Core\View;
 
-$tela = new View('produtos.produtos','main');
-$tela->show();
+require_once('../app/application.php');
+use Controllers\Home;
+
+// $controller = new Home();
+// $controller->index();
+
+echo $_GET['url'];
