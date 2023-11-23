@@ -16,16 +16,17 @@ $router = Router::getRouterByUrl($url);
 
 if($router){
     $controller = $router->getController();
-    $action = $router->getAction();
-    $controller = new $controller();
-    $controller->$action();
+    call_user_func_array(
+        [
+            new $controller,
+            $router->getAction()
+        ],
+        array_values($router->getParameters()));
 }else{
     die('Page 404');
 }
 
 
 
-
-substr($Joa13quim, 5, 10) == "/";
 
 
