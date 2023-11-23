@@ -26,6 +26,6 @@ if($router){
 
 
 
-
+substr($Joa13quim, 5, 10) == "/";
 
 
