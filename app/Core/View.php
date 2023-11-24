@@ -19,15 +19,13 @@ class View
     }
     private function createStringRequireView()
     {
-        $view = (substr($this->view, -9, 9) == ".view.php") ?
-            substr_replace($this->view, "", -9, 9) : $this->view;
+        $view = preg_replace("(\.view.php$)",'',$this->view);
         $view = str_replace('.', '/', $view);
         return VIEWS_PATH . "/" . $view . ".view.php";
     }
     private function createStringRequireTemplate()
     {
-        $template = (substr($this->template, -13, 13) == ".view.php") ?
-        substr_replace($this->template, "", -13, 13) : $this->template;
+        $template = preg_replace("(\.template.php$)",'',$this->template);
         $template = str_replace('.', '/', $template);
         return TEMPLATES_PATH . "/" . $template . ".template.php";
     }
