@@ -249,10 +249,10 @@ INSERT INTO `atendimentos` (`id`, `pessoas_id`, `mesa`, `pagamento_data`, `valor
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `cofigs`
+-- Estrutura da tabela `configs`
 --
 
-CREATE TABLE `cofigs` (
+CREATE TABLE `configs` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(100) NOT NULL,
   `value` varchar(100) NOT NULL,
@@ -1912,9 +1912,9 @@ ALTER TABLE `atendimentos`
   ADD KEY `fk_atendimentos_pessoas1_idx` (`pessoas_id`);
 
 --
--- Índices para tabela `cofigs`
+-- Índices para tabela `configs`
 --
-ALTER TABLE `cofigs`
+ALTER TABLE `configs`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -1978,9 +1978,9 @@ ALTER TABLE `atendimentos`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=202;
 
 --
--- AUTO_INCREMENT de tabela `cofigs`
+-- AUTO_INCREMENT de tabela `configs`
 --
-ALTER TABLE `cofigs`
+ALTER TABLE `configs`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
