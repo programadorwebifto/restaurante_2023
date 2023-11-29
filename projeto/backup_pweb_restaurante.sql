@@ -255,10 +255,7 @@ INSERT INTO `atendimentos` (`id`, `pessoas_id`, `mesa`, `pagamento_data`, `valor
 CREATE TABLE `configs` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(100) NOT NULL,
-  `value` varchar(100) NOT NULL,
-  `criacao_data` datetime NOT NULL DEFAULT current_timestamp(),
-  `alteracao_data` datetime DEFAULT NULL,
-  `exclusao_data` datetime DEFAULT NULL
+  `value` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='Armazena as constantes do sistema, exemplo: no da lanchonete, valor da taxa de serviço, se vai utilizar o modo de preparo.';
 
 -- --------------------------------------------------------

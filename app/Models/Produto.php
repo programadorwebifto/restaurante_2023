@@ -13,6 +13,7 @@ class Produto extends Model{
                            'unidade_medida',
                            'disponivel',
                            'criacao_data',
-                           'alteracao_data',
-                           'exclusao_data'];
+                           'alteracao_data'];
+    
+    protected $__protected_delete = true;
 }
