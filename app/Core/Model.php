@@ -26,8 +26,14 @@ abstract class Model
     protected $__protected_delete = false;
 
     private $__protected_delete_column = 'exclusao_data';
+    protected $__audit_date = false;
+
+    private $__audit_date_columns = ['create'=>'criacao_data','alter'=>'alteracao_data'];
 
     public function __construct($id = null){
+        if($this->__audit_date){
+            $this->columns = array_merge($this->columns,array_values($this->__audit_date_columns));
+        }
         if(isset($id)){
             $this->load($id);
         }
@@ -87,6 +93,9 @@ abstract class Model
 
     private function update(array $data)
     {
+        if($this->__audit_date){
+            $data[$this->__audit_date_columns['alter']] = Date('Y-m-d H:i:s');
+        }
         $sql = "UPDATE $this->table SET";
         $comma = '';
         foreach($data as $key => $value){
@@ -180,5 +189,8 @@ abstract class Model
         return [$where, $data];
     }
 
+    public function getData(){
+        return $this->__data;
+    }
 
 }
