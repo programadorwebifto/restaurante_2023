@@ -5,3 +5,4 @@ defined('APPLICATION_URL')           || define('APPLICATION_URL', 'http://localh
 defined('ADMIN_LTE')                 || define('ADMIN_LTE',APPLICATION_URL.'/adminlte');
 defined('TEMPLATE_DEFAULT')          || define('TEMPLATE_DEFAULT','main');
 defined('APPLICATION_NAME')          || define('APPLICATION_NAME','sistema');
+defined('APPLICATION_LANGUAGE')      || define('APPLICAITON_LANGUAGE','pt-br');
