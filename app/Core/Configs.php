@@ -25,4 +25,18 @@ class Configs{
         }
         return $configs;
     }
+
+    /**
+     * Criar constantes espelho da tabela config do banco de dados;
+     * @return void
+     */
+    public static function createConfigsDB(){
+        if(defined('CONFIGS_DB')){
+            $model = "\\Models\\".CONFIGS_DB;
+            $configs = new $model();
+            foreach($configs->all() as $config){
+                defined($config->name) || define($config->name, $config->value);
+            }
+        }
+    }
 }
