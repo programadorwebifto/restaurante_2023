@@ -50,6 +50,7 @@ class View
                 $template['title'] = $this->template_subtitle;
             }
         }
+        $template['subtitle'] = $this->template_subtitle;
         return $template;
     }
 

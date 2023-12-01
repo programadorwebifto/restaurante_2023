@@ -18,7 +18,7 @@ class Styles{
     }
 
     public static function show(array $style_files = []){
-        $styles_files = array_merge(self::$files, $style_files);
+        $style_files = array_merge(self::$files, $style_files);
         $styles = Configs::getConfig('styles');
         foreach($styles as $name => $style){
             if(in_array($name,$style_files)){

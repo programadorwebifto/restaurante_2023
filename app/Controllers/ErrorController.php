@@ -2,6 +2,7 @@
 
 namespace Controllers;
 use Core\Controller;
+use Core\Scripts;
 use Core\Styles;
 use Core\View;
 class ErrorController extends Controller{
@@ -9,7 +10,6 @@ class ErrorController extends Controller{
     {
         $view = new View("page404", "blank");
         $view->setTitle("Erro 404");
-        Styles::addStyle("body{background-color:black;color:white;}");
         $view->show();
     }
 
