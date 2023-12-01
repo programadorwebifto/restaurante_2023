@@ -3,16 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AdminLTE 3 | Fixed Footer Layout</title>
+  <title><?=$template['title']?></title>
 
-  <!-- Google Font: Source Sans Pro -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="<?=ADMIN_LTE?>/plugins/fontawesome-free/css/all.min.css">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="<?=ADMIN_LTE?>/dist/css/adminlte.min.css">
-  <!-- CSS da nossa aplicação -->
-  <link rel="stylesheet" href="<?=APPLICATION_URL?>/assets/styles/app.css">
+  <?=\Core\Styles::show(['google_fonts','faicons','adminlte','app'])?>
 </head>
 <body class="hold-transition sidebar-mini layout-footer-fixed">
 <!-- Site wrapper -->

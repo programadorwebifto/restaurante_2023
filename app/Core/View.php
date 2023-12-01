@@ -11,6 +11,8 @@ class View
     private $view;
     private $template;
     private $data;
+
+    private $template_subtitle = "";
     public function __construct($view, $template = TEMPLATE_DEFAULT, $data = [])
     {
         $this->view = $view;
@@ -38,7 +40,21 @@ class View
     }
 
     private function getTemplateConfigs(){
-        return Configs::getConfig('templates');
+        $template = Configs::getConfig('templates');
+        if(!empty($this->template_subtitle) && (!isset($template['subtitle']) || $template['subtitle'])){
+            if(isset($template['prefix']) && !empty($template['prefix'])){
+                $template['title'] .= $template['prefix'] . $this->template_subtitle;
+            } else if(isset($template['suffix']) && !empty($template['suffix'])){
+                $template['title'] = $this->template_subtitle.$template['suffix'].$template['title'];
+            }else{
+                $template['title'] = $this->template_subtitle;
+            }
+        }
+        return $template;
+    }
+
+    public function setTitle($title){
+        $this->template_subtitle = $title;
     }
 
 
