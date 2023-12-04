@@ -7,7 +7,7 @@
   <?=\Core\Styles::show(['google_fonts','faicons','adminlte','app'])?>
   
 </head>
-<body class="hold-transition bg-gray">
+<body class="hold-transition">
     <?= $view ?>
 </div>
 <!-- /.login-box -->
