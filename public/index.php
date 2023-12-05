@@ -1,18 +1,11 @@
 <?php
 
 require_once('../app/application.php');
-use Core\Action;
+use Core\Request;
+
+Request::getInstance()->getAction()->run();
 
 
-// $controller = new Home();
-// $controller->index();
-
-$url = '/';
-if(isset($_GET['url'])){
-    $url = $_GET['url'];
-}
-
-Action::createActionByUrl($url)->run();
 
 
 

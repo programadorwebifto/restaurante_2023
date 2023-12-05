@@ -15,5 +15,9 @@ Router::get("/produto/{id}/{nome_usuario}", Controllers\Produtos::class,'produto
 Router::get("/404", Controllers\ErrorController::class, 'page404');
 Router::get("/500", Controllers\ErrorController::class, 'page500');
 
+//rotas de usuário
+Router::get('/usuarios/novo', \Controllers\Usuarios\Cadastro::class);
+Router::post('/usuarios/novo', \Controllers\Usuarios\Cadastro::class,'salvar');
+
 
 

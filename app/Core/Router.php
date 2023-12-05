@@ -21,7 +21,7 @@ class Router
 
     private function __construct($url, $controller, $action, $method)
     {
-        $this->url = (substr($url, 0, 1) == '/') ?substr_replace($url, '', 0, 1):$url;
+        $this->url = (substr($url, 0, 1) == '/') ?$url:"/$url";
         $this->controller = $controller;
         $this->action = $action;
         $this->method = $method;
@@ -53,7 +53,7 @@ class Router
 
 
     public static function getRouterByUrl($url, $method="GET"){
-        $url = (substr($url, 0, 1) == '/') ? substr_replace($url, '', 0, 1):$url;
+        $url = (substr($url, 0, 1) == '/') ?$url:"/$url";
         $routers = ($method == "GET") ? self::$get : self::$post;
        
         foreach($routers as $router){
