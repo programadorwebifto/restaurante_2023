@@ -1887,9 +1887,8 @@ INSERT INTO `produtos` (`id`, `nome`, `descricao`, `valor_un`, `unidade_medida`,
 CREATE TABLE `usuarios` (
   `id` int(10) UNSIGNED NOT NULL,
   `pessoas_id` int(10) UNSIGNED NOT NULL,
-  `cpf` varchar(12) NOT NULL COMMENT 'Campo de login do nosso sistema.',
+  `login` varchar(100) NOT NULL COMMENT 'Campo de login do nosso sistema.',
   `password` varchar(255) NOT NULL,
-  `email` varchar(100) NOT NULL,
   `ativo` tinyint(1) NOT NULL DEFAULT 1,
   `email_confirmacao` tinyint(1) NOT NULL DEFAULT 0 COMMENT 'Armazena se o e-mail do usuário já foi confirmado.',
   `exclusao_data` datetime DEFAULT NULL,
@@ -1947,7 +1946,9 @@ ALTER TABLE `pedidos`
 -- Índices para tabela `pessoas`
 --
 ALTER TABLE `pessoas`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+   ADD UNIQUE KEY `cpf_UNIQUE` (`cpf`),
+   ADD UNIQUE KEY `email_UNIQUE` (`email`);
 
 --
 -- Índices para tabela `produtos`
@@ -1960,8 +1961,7 @@ ALTER TABLE `produtos`
 --
 ALTER TABLE `usuarios`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `email_UNIQUE` (`email`),
-  ADD UNIQUE KEY `cpf_UNIQUE` (`cpf`),
+  ADD UNIQUE KEY `login_UNIQUE` (`login`),
   ADD KEY `fk_usuarios_pessoas_idx` (`pessoas_id`);
 
 --
