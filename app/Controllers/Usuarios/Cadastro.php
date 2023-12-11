@@ -5,6 +5,7 @@ use Core\Controller;
 use Core\Request;
 use Core\View;
 use Models\Pessoa;
+use Models\Usuario;
 
 class Cadastro extends Controller{
     public function index(){
@@ -13,7 +14,18 @@ class Cadastro extends Controller{
     }
 
     public function save(Request $request){
-        pre($request->all());
+        //verificar se usuario existe na base dados;
+        $pessoa = new Pessoa($request->pessoas_id);
+        $pessoa->save([
+            'nome'=>$request->nome,
+            'telefone' => $request->telefone,
+            'cpf' => $request->cpf,
+            'rg' => $request->rg,
+            'rg_expedidor' => $request->rg_expedidor,
+            'email' => $request->email,
+        ]);
+        $pessoa->promoteUser();
+        $this->redirect();
     }
     public function find(Request $request){
         $pessoa = new Pessoa();

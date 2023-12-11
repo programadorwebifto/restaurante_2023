@@ -72,7 +72,7 @@ abstract class Model
      * Insererir no banco de dados
      * @return self
      */
-    private function insert(array $data)
+    protected function insert(array $data)
     {
         $columns = implode(', ',array_keys($data));
         $values = implode(', :',array_keys($data));
@@ -91,7 +91,7 @@ abstract class Model
         return $conn->lastInsertId($this->table);
     }
 
-    private function update(array $data)
+    protected function update(array $data)
     {
         if($this->__audit_date){
             $data[$this->__audit_date_columns['alter']] = Date('Y-m-d H:i:s');
