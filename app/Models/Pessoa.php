@@ -40,4 +40,9 @@ class Pessoa extends Model{
         $this->user->login = $this->cpf;
         $this->user->save();
     }
+
+    public static function getPessoaByCPF($cpf){
+        $pessoa = new Pessoa();
+        return $pessoa->where('cpf', '=', $cpf)->get();
+    }
 }

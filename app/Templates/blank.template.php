@@ -9,9 +9,7 @@
 </head>
 <body class="hold-transition">
     <?= $view ?>
-</div>
-<!-- /.login-box -->
-
 <?=\Core\Scripts::show(['jquery','boostrap','adminlte'])?>
+<?php \Components\ToastsAlert::show();?>
 </body>
 </html>

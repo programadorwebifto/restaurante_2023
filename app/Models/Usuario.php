@@ -2,10 +2,11 @@
 
 namespace Models;
 
+use Core\Interfaces\AuthUser;
 use Core\Model;
+use Core\Session;
 
-
-class Usuario extends Model
+class Usuario extends Model implements AuthUser
 {
     protected $table = 'usuarios';
     private $password;
@@ -19,30 +20,48 @@ class Usuario extends Model
 
     protected $__audit_date = true;
 
-    public function __set($name, $value)
-    {
-        if ($name == 'password') {
-            $this->password = password_hash($value, PASSWORD_DEFAULT);
-        }else{
-            parent::__set($name, $value);
-        }
-    }
 
     public function save(array $data = [])
     {
         if (array_key_exists('password', $data)) {
             $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
-        }else if(isset($this->password)){
-            $data['password'] = $this->password;
+        } else if (isset($this->password)) {
+            $data['password'] = password_hash($this->password, PASSWORD_DEFAULT);
+            unset($this->password);
         }
         return parent::save($data);
     }
 
-    protected function insert(array $data){
-        if(!array_key_exists('password',$data)){
+    protected function insert(array $data)
+    {
+        if (!array_key_exists('password', $data)) {
             $data['password'] = password_hash($data['login'], PASSWORD_DEFAULT);
         }
         return parent::insert($data);
+    }
+
+    public static function login(string $cpf, string $password)
+    {
+        $session = Session::getInstance();
+        if (!$session->isLoged()) {
+            $pessoa = Pessoa::getPessoaByCPF($cpf);
+            if ($pessoa) {
+                $usuario = new Usuario;
+                $usuario->columns[] = 'password';
+                $usuario = $usuario->where('pessoas_id', '=', $pessoa->id)->get();
+                if ($usuario && password_verify($password, $usuario->password)) {
+                    unset($usuario->password);
+                    $session->registerUser($usuario);
+                    return true;
+                }
+            }
+            return false;
+        }
+
+    }
+
+    public function logout()
+    {
     }
 
 

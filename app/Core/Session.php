@@ -2,10 +2,13 @@
 
 namespace Core;
 
+use Core\Interfaces\AuthUser;
+
 class Session{
     private static $instance;
 
     private $session_key = '__data__';
+    private $user_key = '__user__';
     private function __construct(){
         session_name(SESSION_NAME);
         session_start();
@@ -43,5 +46,23 @@ class Session{
 
     public function destory(){
         session_destroy();
+    }
+
+    public function registerUser(AuthUser $user){
+        $_SESSION[$this->user_key] = $user;
+    }
+
+    public function getUserAuth(){
+        return isset($_SESSION[$this->user_key])?$_SESSION[$this->user_key]:null;
+    }
+
+    public function isLoged(){
+        return isset($_SESSION[$this->user_key]);
+    }
+
+    public function clearUser(){
+        $usuario = $this->getUserAuth();
+        $usuario->logout();
+        unset($_SESSION[$this->user_key]);
     }
 }
