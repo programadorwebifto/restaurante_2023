@@ -25,6 +25,7 @@ class Cadastro extends Controller{
             'email' => $request->email,
         ]);
         $pessoa->promoteUser();
+        \Components\ToastsAlert::addAlertSuccess("Castrado  de $request->nome realizado com sucesso!", 'Confirmação de Cadastro');
         $this->redirect();
     }
     public function find(Request $request){
