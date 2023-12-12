@@ -5,6 +5,7 @@ namespace Controllers\Usuarios;
 use Components\ToastsAlert;
 use Core\Controller;
 use Core\Request;
+use Core\Session;
 use Core\View;
 use Models\Usuario;
 
@@ -21,6 +22,11 @@ class Login extends Controller{
             action(\Controllers\Home::class)->redirect();
         }
         ToastsAlert::addAlertWarning('Usuário e/ou Senha Inválida(s)','Falha de Login');
+        $this->redirect();
+    }
+
+    public function logout(){
+        Session::getInstance()->clearUser();
         $this->redirect();
     }
 }

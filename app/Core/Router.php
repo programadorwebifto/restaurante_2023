@@ -19,6 +19,8 @@ class Router
     private $method;
     private $params = array();
 
+    private $middlewares = [];
+
     private function __construct($url, $controller, $action, $method)
     {
         $this->url = (substr($url, 0, 1) == '/') ?$url:"/$url";
@@ -105,6 +107,41 @@ class Router
             $url = str_replace("{{$var}}", urlencode($param), $url);
         }
         return $url;
+    }
+
+    public function addMiddleware($middleware){
+        if(!is_array($middleware)){
+            $middleware = [$middleware];
+        }
+        $this->middlewares = array_merge($this->middlewares, $middleware);
+        return $this;
+    }
+
+
+    public function checkMiddlewares(){
+        $middlewaresconfig = Configs::getConfig('middlewares');
+        foreach($this->middlewares as $middleware){
+            if(array_key_exists($middleware,$middlewaresconfig)){
+                $middleware = $middlewaresconfig[$middleware];
+            }
+            $mid = new $middleware;
+            if(!$mid->check()){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public function execMiddlewares(){
+        $middlewaresconfig = Configs::getConfig('middlewares');
+        foreach($this->middlewares as $middleware){
+            if(array_key_exists($middleware,$middlewaresconfig)){
+                $middleware = $middlewaresconfig[$middleware];
+            }
+            $mid = new $middleware;
+            $mid->exec();
+        }
+        return true;
     }
 }
 

@@ -36,6 +36,7 @@ class Action
     public function run()
     {
         if ($this->router) {
+            $this->router->execMiddlewares();
             $controller = $this->router->getController();
             call_user_func_array(
                 [

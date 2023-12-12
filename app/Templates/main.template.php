@@ -64,7 +64,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#" role="button" title="Sair">
+          <a class="nav-link" href="<?=action(\Controllers\Usuarios\Login::class,'logout')?>" role="button" title="Sair">
             Sair <i class="fas fa-sign-out-alt"></i>
           </a>
         </li>
