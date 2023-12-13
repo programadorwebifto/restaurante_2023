@@ -1,6 +1,7 @@
 <?php
 
 use Core\Action;
+use Core\Component;
 
 if(!function_exists('pre')){
     function pre($data){
@@ -21,6 +22,17 @@ if(!function_exists('action')){
 if(!function_exists('value')){
     function value(&$var,$default = ''){
         return isset($var) ? $var : $default;
+    }
+}
+
+if(!function_exists('component')){
+    function component($component,array $data = []){
+        if(is_string($component) && class_exists($component)){
+            $component = new $component();
+        }else if(!$component instanceof Component){
+            $component = new Component($component);
+        }
+        $component->show($data);
     }
 }
 
