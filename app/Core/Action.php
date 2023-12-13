@@ -81,4 +81,17 @@ class Action
         header('location:' . $this);
         die();
     }
+
+    public function isRunning(){
+        $running = Request::getInstance()->getAction();
+        return $running->router->getController() == $this->router->getController()
+            && $running->router->getAction() == $this->router->getAction();
+    }
+
+    public function checkMiddlewares(){
+        if($this->router){
+            return $this->router->checkMiddlewares();
+        }
+        return false;
+    }
 }

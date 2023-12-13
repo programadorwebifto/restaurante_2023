@@ -119,29 +119,11 @@ class Router
 
 
     public function checkMiddlewares(){
-        $middlewaresconfig = Configs::getConfig('middlewares');
-        foreach($this->middlewares as $middleware){
-            if(array_key_exists($middleware,$middlewaresconfig)){
-                $middleware = $middlewaresconfig[$middleware];
-            }
-            $mid = new $middleware;
-            if(!$mid->check()){
-                return false;
-            }
-        }
-        return true;
+        return Middleware::checkMiddlewares($this->middlewares);
     }
 
     public function execMiddlewares(){
-        $middlewaresconfig = Configs::getConfig('middlewares');
-        foreach($this->middlewares as $middleware){
-            if(array_key_exists($middleware,$middlewaresconfig)){
-                $middleware = $middlewaresconfig[$middleware];
-            }
-            $mid = new $middleware;
-            $mid->exec();
-        }
-        return true;
+        return Middleware::execMiddlewares($this->middlewares);
     }
 }
 
