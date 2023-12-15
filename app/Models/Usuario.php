@@ -5,11 +5,13 @@ namespace Models;
 use Core\Interfaces\AuthUser;
 use Core\Model;
 use Core\Session;
+use Exception;
 
 class Usuario extends Model implements AuthUser
 {
     protected $table = 'usuarios';
     private $password;
+    private $pessoa;
     protected $columns = ['id',
         'pessoas_id',
         'login',
@@ -62,6 +64,25 @@ class Usuario extends Model implements AuthUser
 
     public function logout()
     {
+    }
+
+    public function getPessoa(){
+        if(is_null($this->pessoa) && $this->isStorage()){
+            $this->pessoa = new Pessoa($this->pessoas_id);
+        }
+        return $this->pessoa;
+    }
+
+    public function changePassword($password,$newpassword){
+            $usuario = new Usuario();
+            $usuario->columns = ['id', 'password'];
+            $usuario = $usuario->where('id', '=', $this->id)->get();
+            if(password_verify($password,$usuario->password)){
+                $usuario->save(['password' => $newpassword]);
+                return true;
+            }
+        throw new Exception('Senha atual inválida!');
+
     }
 
 

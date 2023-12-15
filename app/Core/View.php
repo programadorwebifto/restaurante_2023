@@ -49,6 +49,11 @@ class View extends ViewElement
     public function show(array $data = [])
     {
         $template = $this->getTemplateConfigs();
+        $user = Session::getInstance()->getUserAuth();
+        if($user){
+            $template['auth_user'] = $user->getPessoa()->nome;
+        }
+       
         ob_start();
         parent::show($data);
         $view = ob_get_clean();

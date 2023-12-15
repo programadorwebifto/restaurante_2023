@@ -50,7 +50,7 @@ class ToastsAlert
                             body: '{$alert['body']}',
                             title:'{$alert['title']}',
                             class: 'bg-{$alert['type']}',
-                            icon: 'fas fa-{$alert['icon']} fa-lg',})";
+                            icon: 'fas fa-{$alert['icon']} fa-lg',});\n";
             }
             echo '</script>';
 
