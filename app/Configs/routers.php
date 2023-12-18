@@ -25,10 +25,8 @@ Router::post('/usuarios/buscar', \Controllers\Usuarios\Cadastro::class,'find');
 
 
 //rotas do negocio
-Router::get("/produtos", Controllers\Produtos::class);
-Router::get("/produto", Controllers\Produtos::class,'produto');
-Router::get("/produto/{id}/novo", Controllers\Produtos::class,'produto');
-Router::get("/produto/{id}/{nome_usuario}", Controllers\Produtos::class,'produto');
+Router::get("/produtos", Controllers\Produtos::class)->addMiddleware('auth');
+Router::post('/produtos/disponivel', Controllers\Produtos::class, 'disponivel');
 
 
 
