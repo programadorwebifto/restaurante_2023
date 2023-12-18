@@ -36,3 +36,9 @@ if(!function_exists('component')){
     }
 }
 
+if(!function_exists('assets')){
+    function assets($file_path){
+        return APPLICATION_URL . "/assets/$file_path";
+    }
+}
+

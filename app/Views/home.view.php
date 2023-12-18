@@ -15,7 +15,7 @@
                 </div>
             </div>
             <div class="card-body">
-                Tela inicial do sistema
+                <img src="<?=assets('images/mesas/livre.png')?>">
             </div>
             <!-- /.card-body -->
             <div class="card-footer">
