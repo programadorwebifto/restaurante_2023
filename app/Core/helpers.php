@@ -1,5 +1,6 @@
 <?php
 
+use Components\Select;
 use Core\Action;
 use Core\Component;
 
@@ -26,6 +27,12 @@ if(!function_exists('value')){
 }
 
 if(!function_exists('component')){
+    /**
+     * Summary of component
+     * @param mixed $component
+     * @param array $data
+     * @return Component|object|Select
+     */
     function component($component,array $data = []){
         if(is_string($component) && class_exists($component)){
             $component = new $component();

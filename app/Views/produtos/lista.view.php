@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-12 py-2">
-        <a href="<?=action(\Controllers\Produtos::class,'novo')?>" class="btn btn-primary float-right">Novo</a>
+        <a href="<?= action(\Controllers\Produtos::class, 'novo') ?>" class="btn btn-primary float-right">Novo</a>
     </div>
     <div class="col-12">
         <!-- Default box -->
@@ -21,19 +21,58 @@
                     <tbody>
                         <?php foreach ($produtos as $produto): ?>
                             <tr>
-                                <td><?= $produto->nome ?></td>
-                                <td>R$ <?= number_format($produto->valor_un, 2, ',', '.') ?></td>
                                 <td>
-                                    <form action="<?=action(\Controllers\Produtos::class,'disponivel','POST')?>" method="POST">
+                                    <?= $produto->nome ?>
+                                </td>
+                                <td>R$
+                                    <?= number_format($produto->valor_un, 2, ',', '.') ?>
+                                </td>
+                                <td>
+                                    <form action="<?= action(\Controllers\Produtos::class, 'disponivel', 'POST') ?>"
+                                        method="POST">
                                         <button type="submit" class="btn">
-                                              <i class="fas fa-<?=($produto->disponivel)?'check-circle text-success':'times-circle text-danger'?>"></i>
+                                            <i
+                                                class="fas fa-<?= ($produto->disponivel) ? 'check-circle text-success' : 'times-circle text-danger' ?>"></i>
                                         </button>
-                                        <input type="hidden" value="<?=$produto->id?>" name="id">
+                                        <input type="hidden" value="<?= $produto->id ?>" name="id">
                                     </form>
                                 </td>
                                 <td>
-                                <i class="fas fa-edit"></i>
-                                <i class="fas fa-trash"></i>
+                                    <a href="<?= action(\Controllers\Produtos::class, 'edit', 'GET', ['id' => $produto->id]) ?>"
+                                        class="btn text-primary"><i class="fas fa-edit"></i></a>
+                                    <button type="button" class="btn text-danger" data-toggle="modal"
+                                        data-target="#confirmar-exclusao-<?= $produto->id ?>">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+
+                                    <div class="modal fade" id="confirmar-exclusao-<?= $produto->id ?>">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header bg-danger">
+                                                    <h4 class="modal-title">Confirmar Exclusão</h4>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>Confirma a exclusão do produto <b>"<?= $produto->nome ?>" ?</b></p>
+                                                </div>
+                                                <div class="modal-footer justify-content-between">
+                                                    <button type="button" class="btn btn-outline-secondary"
+                                                        data-dismiss="modal">Cancelar</button>
+                                                    <form action="<?= action(\Controllers\Produtos::class, 'delete', 'POST') ?>"
+                                                        method="post">
+                                                        <input type="hidden" name="id" value="<?=$produto->id?>">
+                                                        <button type="submit" class="btn btn-outline-danger">Excluir</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                            <!-- /.modal-content -->
+                                        </div>
+                                        <!-- /.modal-dialog -->
+                                    </div>
+
                                 </td>
                             </tr>
                         <?php endforeach; ?>

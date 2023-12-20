@@ -30,6 +30,7 @@ Router::post('/produtos/disponivel', Controllers\Produtos::class, 'disponivel')-
 Router::get("/produtos/novo", Controllers\Produtos::class,'novo')->addMiddleware('auth');
 Router::get('/produto/{id}', Controllers\Produtos::class, 'edit')->addMiddleware('auth');
 Router::post('/produto', Controllers\Produtos::class, 'update')->addMiddleware('auth');
+Router::post('/produto/delete', Controllers\Produtos::class, 'delete')->addMiddleware('auth');
 
 
 

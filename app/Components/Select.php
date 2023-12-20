@@ -32,7 +32,7 @@ class Select extends Component{
         $html="";
         if($this->placeholder){
             $select = (empty($this->value)) ? ' selected' : '';
-            $html .= "<option disabled$select>{$this->placeholder}</option>";
+            $html .= "<option disabled$select value=''>{$this->placeholder}</option>";
         }
         foreach($this->options as $value=> $text){
             $select = ($this->value == $value) ? ' selected' : '';

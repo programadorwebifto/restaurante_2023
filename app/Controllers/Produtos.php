@@ -48,6 +48,17 @@ class Produtos extends Controller
         ToastsAlert::addAlertSuccess("{$produto->nome} Salvo com Sucesso!");
         $this->redirect();
     }
+    public function delete(Request $request)
+    {
+        $produto = new Produto($request->id);
+        if($produto->isStorage()){
+            ToastsAlert::addAlertSuccess("{$produto->nome} Excluido com Sucesso!");
+            $produto->delete();
+            $this->redirect();
+        }
+        ToastsAlert::addAlertError("Produto não encontrado!");
+        $this->redirect();
+    }
 
     /**
      * Abre a tela de criação de um novo registro
