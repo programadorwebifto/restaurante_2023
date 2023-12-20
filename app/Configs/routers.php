@@ -25,6 +25,7 @@ Router::post('/usuarios/buscar', \Controllers\Usuarios\Cadastro::class,'find');
 
 
 //rotas do negocio
+////rotas produtos
 Router::get("/produtos", Controllers\Produtos::class)->addMiddleware('auth');
 Router::post('/produtos/disponivel', Controllers\Produtos::class, 'disponivel')->addMiddleware('auth');
 Router::get("/produtos/novo", Controllers\Produtos::class,'novo')->addMiddleware('auth');
@@ -32,7 +33,8 @@ Router::get('/produto/{id}', Controllers\Produtos::class, 'edit')->addMiddleware
 Router::post('/produto', Controllers\Produtos::class, 'update')->addMiddleware('auth');
 Router::post('/produto/delete', Controllers\Produtos::class, 'delete')->addMiddleware('auth');
 
-
+////rotas atendimento
+Router::get('/mesa/{mesa}', Controllers\Home::class, 'atendimento');
 
 
 

@@ -3,9 +3,9 @@
 return
     [
         [
-            'label' => 'Home',
+            'label' => 'Mesas',
             'link' => action(\Controllers\Home::class),
-            'icon' => 'fas fa-tachometer-alt'
+            'icon' => 'fas fa-utensils'
         ],
 
         [
