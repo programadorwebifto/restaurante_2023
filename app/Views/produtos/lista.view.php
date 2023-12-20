@@ -1,30 +1,6 @@
 <div class="row">
-    <div class="col-12">
-        <!-- Default box -->
-        <div class="card card-primary collapsed-card">
-            <div class="card-header cursor-pointer" data-card-widget="collapse">
-                <h3 class="card-title">Cadastrar Produtos</h3>
-                <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                        <i class="fas fa-plus"></i>
-                    </button>
-                </div>
-            </div>
-            <div class="card-body">
-                Tela de Produtos
-                <?= $nome ?>
-                <p>
-                    Valor:
-                    <?= $valor ?>
-                </p>
-            </div>
-            <!-- /.card-body -->
-            <div class="card-footer">
-                Footer
-            </div>
-            <!-- /.card-footer-->
-        </div>
-        <!-- /.card -->
+    <div class="col-12 py-2">
+        <a href="<?=action(\Controllers\Produtos::class,'novo')?>" class="btn btn-primary float-right">Novo</a>
     </div>
     <div class="col-12">
         <!-- Default box -->
@@ -33,7 +9,7 @@
                 <h3 class="card-title">Lisa de Produtos Cadastrados</h3>
             </div>
             <div class="card-body">
-                <table class="table table-responsive table-striped">
+                <table class="table w-100 table-striped">
                     <thead>
                         <tr>
                             <th>Nome</th>

@@ -29,10 +29,10 @@ if(!function_exists('component')){
     function component($component,array $data = []){
         if(is_string($component) && class_exists($component)){
             $component = new $component();
+            $component->setData($data);
         }else if(!$component instanceof Component){
-            $component = new Component($component);
+            $component = new Component($component, $data);
         }
-        $component->show($data);
     }
 }
 

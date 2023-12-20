@@ -35,6 +35,9 @@ abstract class ViewElement implements InterfaceView
         return (isset($this->data[$name])) ? $this->data[$name] : null;
     }
 
+    public function setData(array $data){
+        $this->data = $data;
+    }
 
 
     public function show(array $data = [])
