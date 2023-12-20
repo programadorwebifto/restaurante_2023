@@ -33,6 +33,7 @@ if(!function_exists('component')){
         }else if(!$component instanceof Component){
             $component = new Component($component, $data);
         }
+        return $component;
     }
 }
 

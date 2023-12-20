@@ -11,7 +11,7 @@ use Core\Interfaces\ViewElement as InterfaceView;
 abstract class ViewElement implements InterfaceView
 {
     protected $view;
-    private $data;
+    protected $data;
 
     public function __construct($view = null, $data = [])
     {

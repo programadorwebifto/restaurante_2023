@@ -43,7 +43,7 @@ class Produtos extends Controller
         $produto->descricao = $request->descricao;
         $produto->valor_un = $request->valor_un;
         $produto->unidade_medida = $request->unidade_medida;
-        $produto->disponivel = $request->disponivel;
+        $produto->disponivel = (isset($request->disponivel))?1:0;
         $produto->save();
         ToastsAlert::addAlertSuccess("{$produto->nome} Salvo com Sucesso!");
         $this->redirect();
