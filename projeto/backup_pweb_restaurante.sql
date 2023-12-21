@@ -565,7 +565,7 @@ CREATE TABLE `pedidos` (
   `id` int(11) NOT NULL,
   `atendimentos_id` int(10) UNSIGNED NOT NULL,
   `produtos_id` int(10) UNSIGNED NOT NULL,
-  `quantidade` int(11) NOT NULL DEFAULT 1,
+  `quantidade` float NOT NULL DEFAULT 1,
   `valor_un` float NOT NULL COMMENT 'Valor do produto pedido no momento do pedido.',
   `situacao` enum('Pedido','Produção','Entrega','Entregue') NOT NULL DEFAULT 'Entregue' COMMENT 'enum(''Pedido'',''Produção'',''Entrega'',''Entregue'')\n',
   `saida_data` datetime DEFAULT NULL COMMENT 'Hora da saída do pedido da produção.',

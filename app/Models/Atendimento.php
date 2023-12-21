@@ -22,4 +22,14 @@ class Atendimento extends Model{
         }
         return null;
     }
+
+    public function addPedido($produtos_id, $quantidade)
+    {
+        $pedido = new Pedido();
+        $pedido->produtos_id = $produtos_id;
+        $pedido->quantidade = $quantidade;
+        $pedido->atendimentos_id = $this->id;
+        $pedido->save();
+        return $pedido;
+    }
 }

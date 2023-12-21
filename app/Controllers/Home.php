@@ -5,8 +5,11 @@ namespace Controllers;
 
 use Components\ToastsAlert;
 use Core\Controller;
+use Core\Request;
 use Core\View;
 use Models\Atendimento;
+use Models\Pedido;
+use Models\Produto;
 
 class Home extends Controller{
     public function index()
@@ -35,9 +38,25 @@ class Home extends Controller{
         }
         $atendimento->mesa = $mesa;
         $atendimento->save();
+        $select  = new \Components\Select();
+        $select->addAttr('class', 'form-control')->addAttr('name', 'produtos_id');
+        $produtos = new Produto();
+        $produtos->where('disponivel','=','1')->orderByAsc('nome');
+        foreach($produtos->all() as $produto){
+            $select->addOption($produto->id, $produto->nome . " " . $produto->money('valor_un'));
+        }
         $view = new View('atendimentos.mesa');
         $view->atendimento = new Atendimento($atendimento->id);
+        $view->produtosSelect = $select;
         $view->setTitle("Mesa $mesa")->show();
+    }
+
+
+    public function addPedido($id, Request $request){
+        $atendimento = new Atendimento($id);
+        $atendimento->addPedido($request->produtos_id, $request->quantidade);
+        ToastsAlert::addAlertSuccess("Pedido Adicionado com sucesso!");
+        $this->redirect('atendimento', 'GET', ['mesa' => $atendimento->mesa]);
     }
 
 }

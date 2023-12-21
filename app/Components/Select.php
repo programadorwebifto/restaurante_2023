@@ -2,6 +2,7 @@
 
 namespace Components;
 use Core\Component;
+use Core\Model;
 
 class Select extends Component{
 
@@ -44,6 +45,13 @@ class Select extends Component{
 
     public function addOption($value,$text){
         $this->options[$value] = $text;
+        return $this;
+    }
+
+    public function addModel(Model $model, $value_column, $text_column){
+        foreach($model->all() as $register){
+            $this->addOption($register->$value_column, $register->$text_column);
+        }
         return $this;
     }
 

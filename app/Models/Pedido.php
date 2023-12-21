@@ -24,7 +24,13 @@ class Pedido extends Model{
     }
 
     
-
+    protected function insert(array $data){
+        if(!array_key_exists('valor_un',$data)){
+            $produto = new Produto($data['produtos_id']);
+            $data['valor_un'] = $produto->valor_un;
+        }
+        return parent::insert($data);
+    }
 
     public function getSubTotal($decimals = 2, $decimal_separator = ",", $thousands_separator = ".", $prefix = 'R$ '){
         return $prefix . number_format($this->quantidade*$this->valor_un, $decimals, $decimal_separator, $thousands_separator);
