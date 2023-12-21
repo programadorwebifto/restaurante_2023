@@ -24,7 +24,7 @@ class Home extends Controller{
 
     public function atendimento($mesa){
         $atendimento = new Atendimento();
-        $atendimento->where('mesa','=','mesa')->where('pagamento_data', 'is', null);
+        $atendimento->where('mesa','=',$mesa)->where('pagamento_data', 'is', null);
         $atendimento = $atendimento->get();
         if($atendimento == false){
             if($mesa<1 || $mesa > N_MESAS){
