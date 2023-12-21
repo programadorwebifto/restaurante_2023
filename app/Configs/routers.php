@@ -37,6 +37,7 @@ Router::post('/produto/delete', Controllers\Produtos::class, 'delete')->addMiddl
 Router::get('/mesa/{mesa}', Controllers\Home::class, 'atendimento');
 Router::post('/atendimento/{id}/pedido', Controllers\Home::class, 'addPedido');
 Router::post('/atendimento/{id}/pagamento', Controllers\Home::class, 'addPagamento');
+Router::post('/atendimento/{id}/finalizar', Controllers\Home::class, 'finalizarAtendimento');
 
 
 

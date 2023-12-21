@@ -65,4 +65,17 @@ class Home extends Controller{
         $this->redirect('atendimento', 'GET', ['mesa' => $atendimento->mesa]);
     }
 
+    public function finalizarAtendimento($id, Request $request){
+        $atendimento = new Atendimento($id);
+        $atendimento->valor_desconto = $request->desconto;
+        $atendimento->pagamento_data = date('Y-m-d H:i:s');
+
+        $atendimento->save();
+        if($atendimento->valor_desconto>0){
+            ToastsAlert::addAlertInfo("Desconto cadastro no valor de R$".number_format($atendimento->valor_desconto,'2',',','.')."!");
+        }
+        ToastsAlert::addAlertSuccess("Atendimento finalizado!");
+        $this->redirect();
+    }
+
 }

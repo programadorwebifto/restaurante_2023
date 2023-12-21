@@ -47,7 +47,10 @@
                                 <?= number_format($atendimento->getValorTotal(), 2, ',', '.') ?>
                             </h1>
                         </div>
-                        <div class="card-footer"></div>
+                        <div class="card-footer">
+                            cod.
+                            <?= $atendimento->id ?>
+                        </div>
                     </div>
                 </div>
                 <div class="col-lg-6">
@@ -55,6 +58,8 @@
                             class="fas fa-angle-left"></i> Voltar</a>
                     <a href="#" class="btn btn-success btn-lg w-100 mb-2" data-toggle="modal"
                         data-target="#registrar-pagamento"> <i class="fas fa-cash-register"></i> Registrar Pagamento</a>
+                    <a href="#" class="btn btn-primary btn-lg w-100 mb-2" data-toggle="modal"
+                        data-target="#finalizar-atendimento"> <i class="fas fa-handshake"></i> Finalizar Atendimento</a>
                 </div>
                 <div class="col-12 order-first order-md-last">
                     <form
@@ -120,15 +125,19 @@
                                             <tr>
                                                 <td>
                                                     <?php
-                                                        echo $pagamento->date('criacao_data', 'H:i');
-                                                        $obs = $pagamento->observacao;
-                                                        if(!empty($obs)):
+                                                    echo $pagamento->date('criacao_data', 'H:i');
+                                                    $obs = $pagamento->observacao;
+                                                    if (!empty($obs)):
                                                         ?>
                                                         <i class="fas fa-info-circle text-info" title="<?= $obs ?>"></i>
-                                                        <?php endif; ?>
-                                                    </td>
-                                                <td><?= $pagamento->money('valor') ?></td>
-                                                <td><?= $pagamento->getPagamentoTipo()->descricao ?></td>
+                                                    <?php endif; ?>
+                                                </td>
+                                                <td>
+                                                    <?= $pagamento->money('valor') ?>
+                                                </td>
+                                                <td>
+                                                    <?= $pagamento->getPagamentoTipo()->descricao ?>
+                                                </td>
                                             </tr>
                                         <?php endforeach; ?>
                                     </tbody>
@@ -214,6 +223,57 @@
                             class="fas fa-undo-alt"></i> Cancelar</button>
                     <button type="submit" class="btn btn-outline-success"> <i class="far fa-money-bill-alt"></i>
                         Registrar</button>
+
+                </div>
+            </form>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<div class="modal fade" id="finalizar-atendimento">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form
+                action="<?= action(\Controllers\Home::class, 'finalizarAtendimento', 'POST', ['id' => $atendimento->id]) ?>"
+                method="post">
+                <div class="modal-header bg-primary">
+                    <h4 class="modal-title"> <i class="fas fa-handshake"></i> Finalizar Atendimento</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <?php if ($atendimento->getValorTotal() > 0): ?>
+                            <div class="alert alert-warning alert-dismissible">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                <h5><i class="icon fas fa-exclamation-triangle"></i> Atenção!</h5>
+                                Ao finalizar um atendiemnto que ainda possui saldo, você estará adicionando
+                                um desconto a comanda do cliente.
+                            </div>
+                            <div class="col-12">
+                                <div class="text-center">Confirma a finalização do Atendimento?</div>
+                            </div>
+                            <div class="col-12 text-danger text-center">
+                                Valor do Desconto:<h5>
+                                    R$ <?= number_format($atendimento->getValorTotal(), 2, ',', '.') ?>
+                                </h5>
+                                <input type="checkbox" required name="desconto"> Autorizo o desconto para o cliente.
+                            </div>
+                        <?php else: ?>
+                            <div class="col">
+                                <div class="text-center">Confirma a finalização do Atendimento?</div>
+                            </div>
+                        <?php endif ?>
+                        <input type="hidden" name="desconto" value="<?= $atendimento->getValorTotal() ?>">
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal"> <i
+                            class="fas fa-undo-alt"></i> Cancelar</button>
+                    <button type="submit" class="btn btn-outline-primary"> <i class="fas fa-handshake"></i>
+                        Finalizar</button>
 
                 </div>
             </form>
