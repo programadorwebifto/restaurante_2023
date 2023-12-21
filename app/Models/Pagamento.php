@@ -15,4 +15,9 @@ class Pagamento extends Model
     ];
     protected $__protected_delete = true;
     protected $__audit_date = true;
+
+
+    public function getPagamentoTipo(){
+        return new PagamentoTipo($this->pagamentos_tipos_id);
+    }
 }

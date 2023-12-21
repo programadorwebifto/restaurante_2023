@@ -58,5 +58,11 @@ class Home extends Controller{
         ToastsAlert::addAlertSuccess("Pedido Adicionado com sucesso!");
         $this->redirect('atendimento', 'GET', ['mesa' => $atendimento->mesa]);
     }
+    public function addPagamento($id, Request $request){
+        $atendimento = new Atendimento($id);
+        $atendimento->addPagamento($request->pagamentos_tipos_id, $request->valor, $request->observacao);
+        ToastsAlert::addAlertSuccess("Pagamento adicionado com sucesso!");
+        $this->redirect('atendimento', 'GET', ['mesa' => $atendimento->mesa]);
+    }
 
 }

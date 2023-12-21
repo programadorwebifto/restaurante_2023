@@ -1,16 +1,12 @@
 <div class="conatiner-fluid">
     <div class="row">
-        <div class="col">
+        <div class="col-md-6">
             <div class="card">
                 <div class="card-body bg-cupom">
                     <table class="printer-ticket" style="max-width:100%">
                         <tbody>
                             <?php
-                            $total = 0;
-                            foreach ($atendimento->getPedidos() as $pedido):
-                                $total += $pedido->valor_un * $pedido->quantidade;
-                                ?>
-
+                            foreach ($atendimento->getPedidos() as $pedido): ?>
                                 <tr class="top">
                                     <td colspan="2" class="font-weight-bold">
                                         <?= $pedido->getProduto()->nome . " (Cod. $pedido->produtos_id)"; ?>
@@ -39,30 +35,28 @@
                 </div>
             </div>
         </div>
-        <div class="col">
+        <div class="col-md-6 order-first order-md-last">
             <div class="row">
-                <div class="col">
+                <div class="col-lg-6">
                     <div class="card text-white bg-info mb-3 ">
                         <div class="card-body">
                             <div class="">
                                 Total:
                             </div>
                             <h1 class="text-center"> R$
-                                <?= number_format($total, 2, ',', '.') ?>
+                                <?= number_format($atendimento->getValorTotal(), 2, ',', '.') ?>
                             </h1>
                         </div>
                         <div class="card-footer"></div>
                     </div>
                 </div>
-                <div class="col">
+                <div class="col-lg-6">
                     <a href="<?= action(\Controllers\Home::class) ?>" class="btn btn-warning btn-lg w-100 mb-2"> <i
                             class="fas fa-angle-left"></i> Voltar</a>
                     <a href="#" class="btn btn-success btn-lg w-100 mb-2" data-toggle="modal"
                         data-target="#registrar-pagamento"> <i class="fas fa-cash-register"></i> Registrar Pagamento</a>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col">
+                <div class="col-12 order-first order-md-last">
                     <form
                         action="<?= action(\Controllers\Home::class, 'addPedido', 'POST', ['id' => $atendimento->id]) ?>"
                         method="POST">
@@ -102,6 +96,53 @@
                     </form>
                 </div>
             </div>
+
+            <div class="row">
+                <div class="col">
+                    <div class="card card-success card-outline">
+                        <div class="card-header">
+                            <div class="card-title">
+                                Pagamentos
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <?php if (count($atendimento->getPagamentos())): ?>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Hora</th>
+                                            <th>Valor</th>
+                                            <th>Tipo</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php foreach ($atendimento->getPagamentos() as $pagamento): ?>
+                                            <tr>
+                                                <td>
+                                                    <?php
+                                                        echo $pagamento->date('criacao_data', 'H:i');
+                                                        $obs = $pagamento->observacao;
+                                                        if(!empty($obs)):
+                                                        ?>
+                                                        <i class="fas fa-info-circle text-info" title="<?= $obs ?>"></i>
+                                                        <?php endif; ?>
+                                                    </td>
+                                                <td><?= $pagamento->money('valor') ?></td>
+                                                <td><?= $pagamento->getPagamentoTipo()->descricao ?></td>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                    </tbody>
+                                </table>
+                            <?php else: ?>
+                                <div class="text-center text-muted"> Sem registros de pagamento</div>
+                            <?php endif; ?>
+                        </div>
+                        <div class="card-footer">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -109,71 +150,73 @@
 <div class="modal fade" id="registrar-pagamento">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header bg-success">
-                <h4 class="modal-title"> <i class="fas fa-cash-register"></i> Registrar Pagamento</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class=" form-group col-6">
-                        <label for="">Total</label>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">R$</span>
+            <form action="<?= action(\Controllers\Home::class, 'addPagamento', 'POST', ['id' => $atendimento->id]) ?>"
+                method="post">
+                <div class="modal-header bg-success">
+                    <h4 class="modal-title"> <i class="fas fa-cash-register"></i> Registrar Pagamento</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class=" form-group col-6">
+                            <label for="">Total</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">R$</span>
+                                </div>
+                                <input type='text' class="form-control"
+                                    value='<?= number_format($atendimento->getValorTotal(), 2, ',', '.') ?>' disabled>
                             </div>
-                            <input type='text' class="form-control" value='<?= number_format($total, 2, ',', '.') ?>' disabled>
                         </div>
-                    </div>
-                    <div class=" form-group col-6">
-                        <label for="">Valor Pagamento</label>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">R$</span>
+                        <div class=" form-group col-6">
+                            <label for="">Valor Pagamento</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">R$</span>
+                                </div>
+                                <input type="number" class="form-control" step='0.01' min='0.01' name="valor"
+                                    value="<?= round($atendimento->getValorTotal(), 2) ?>">
                             </div>
-                            <input type="number" class="form-control" value="<?= round($total,2) ?>">
                         </div>
-                    </div>
-                    <div class=" form-group col-6">
-                        <label for="">Troco</label>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">R$</span>
+                        <div class=" form-group col-6">
+                            <label for="">Troco</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">R$</span>
+                                </div>
+                                <input type="text" class="form-control" value="0,00" disabled>
                             </div>
-                            <input type="text" class="form-control" value="0,00" disabled>
                         </div>
-                    </div>
-                    <div class=" form-group col-6">
-                        <label for="">Tipo de pagamento:</label>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-money-check"></i></span>
-                            </div>
-                            <?php component(\Components\Select::class)
-                                    ->addAttr('class','form-control')
-                                    ->addAttr('name','pagamentos_tipos_id')
-                                    ->addModel(model('PagamentoTipo')->orderByAsc('descricao'),'id','descricao')
+                        <div class=" form-group col-6">
+                            <label for="">Tipo de pagamento:</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-money-check"></i></span>
+                                </div>
+                                <?php component(\Components\Select::class)
+                                    ->addAttr('class', 'form-control')
+                                    ->addAttr('name', 'pagamentos_tipos_id')
+                                    ->addModel(model('PagamentoTipo')->orderByAsc('descricao'), 'id', 'descricao')
                                     ->show() ?>
+                            </div>
                         </div>
-                    </div>
-                    <div class=" form-group col-12">
-                        <label for="">Observação:</label>
-                       <textarea name="observacao" placeholder="digite observações se forem nescessárias" class="form-control">
-
-                       </textarea>
+                        <div class=" form-group col-12">
+                            <label for="">Observação:</label>
+                            <textarea name="observacao" placeholder="digite observações se forem nescessárias"
+                                class="form-control"></textarea>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="modal-footer justify-content-between">
-                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal"> <i
-                        class="fas fa-undo-alt"></i> Cancelar</button>
-                <form action="<?= action(\Controllers\Produtos::class, 'delete', 'POST') ?>" method="post">
-                    <input type="hidden" name="id" value="<?= $id ?>">
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal"> <i
+                            class="fas fa-undo-alt"></i> Cancelar</button>
                     <button type="submit" class="btn btn-outline-success"> <i class="far fa-money-bill-alt"></i>
                         Registrar</button>
-                </form>
-            </div>
+
+                </div>
+            </form>
         </div>
         <!-- /.modal-content -->
     </div>
