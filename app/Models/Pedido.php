@@ -12,8 +12,28 @@ class Pedido extends Model{
                            'valor_un',
                            'situacao',
                            'saida_data',
-                           'entraga_data',
+                           'entrega_data',
                           ];
     protected $__protected_delete = true;
     protected $__audit_date = true;
+
+
+
+    public function __construct($id = null){
+        parent::__construct($id);
+    }
+
+    
+
+
+    public function getSubTotal($decimals = 2, $decimal_separator = ",", $thousands_separator = ".", $prefix = 'R$ '){
+        return $prefix . number_format($this->quantidade*$this->valor_un, $decimals, $decimal_separator, $thousands_separator);
+    }   
+    public function getProduto()
+    {
+        if($this->isStorage()){
+            return new Produto($this->produtos_id);
+        }
+        return null;
+    }
 }

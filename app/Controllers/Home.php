@@ -36,6 +36,7 @@ class Home extends Controller{
         $atendimento->mesa = $mesa;
         $atendimento->save();
         $view = new View('atendimentos.mesa');
+        $view->atendimento = new Atendimento($atendimento->id);
         $view->setTitle("Mesa $mesa")->show();
     }
 

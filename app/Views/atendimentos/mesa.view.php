@@ -5,79 +5,17 @@
                 <div class="card-body bg-cupom">
                     <table class="printer-ticket" style="max-width:100%">
                         <tbody>
-                            <tr class="top">
-                                <td colspan="2" class="font-weight-bold">Doce de brigadeiro</td>
-                                <td class="text-right">14:00 </td>
-                            </tr>
-                            <tr class="border-bottom">
-                                <td class="pb-2">R$ 7,99</td>
-                                <td class="pb-2">2.0</td>
-                                <td class="pb-2">R$ 15,98</td>
-                            </tr>
-                            <tr class="top">
-                                <td colspan="2" class="font-weight-bold">Doce de brigadeiro</td>
-                                <td class="text-right">14:00 </td>
-                            </tr>
-                            <tr class="border-bottom">
-                                <td class="pb-2">R$ 7,99</td>
-                                <td class="pb-2">2.0</td>
-                                <td class="pb-2">R$ 15,98</td>
-                            </tr>
-                            <tr class="top">
-                                <td colspan="2" class="font-weight-bold">Doce de brigadeiro</td>
-                                <td class="text-right">14:00 </td>
-                            </tr>
-                            <tr class="border-bottom">
-                                <td class="pb-2">R$ 7,99</td>
-                                <td class="pb-2">2.0</td>
-                                <td class="pb-2">R$ 15,98</td>
-                            </tr>
-                            <tr class="top">
-                                <td colspan="2" class="font-weight-bold">Doce de brigadeiro</td>
-                                <td class="text-right">14:00 </td>
-                            </tr>
-                            <tr class="border-bottom">
-                                <td class="pb-2">R$ 7,99</td>
-                                <td class="pb-2">2.0</td>
-                                <td class="pb-2">R$ 15,98</td>
-                            </tr>
-                            <tr class="top">
-                                <td colspan="2" class="font-weight-bold">Doce de brigadeiro</td>
-                                <td class="text-right">14:00 </td>
-                            </tr>
-                            <tr class="border-bottom">
-                                <td class="pb-2">R$ 7,99</td>
-                                <td class="pb-2">2.0</td>
-                                <td class="pb-2">R$ 15,98</td>
-                            </tr>
-                            <tr class="top">
-                                <td colspan="2" class="font-weight-bold">Doce de brigadeiro</td>
-                                <td class="text-right">14:00 </td>
-                            </tr>
-                            <tr class="border-bottom">
-                                <td class="pb-2">R$ 7,99</td>
-                                <td class="pb-2">2.0</td>
-                                <td class="pb-2">R$ 15,98</td>
-                            </tr>
-                            <tr class="top">
-                                <td colspan="2" class="font-weight-bold">Doce de brigadeiro</td>
-                                <td class="text-right">14:00 </td>
-                            </tr>
-                            <tr class="border-bottom">
-                                <td class="pb-2">R$ 7,99</td>
-                                <td class="pb-2">2.0</td>
-                                <td class="pb-2">R$ 15,98</td>
-                            </tr>
-                            <tr class="top">
-                                <td colspan="2" class="font-weight-bold">Doce de brigadeiro</td>
-                                <td class="text-right">14:00 </td>
-                            </tr>
-                            <tr class="border-bottom">
-                                <td class="pb-2">R$ 7,99</td>
-                                <td class="pb-2">2.0</td>
-                                <td class="pb-2">R$ 15,98</td>
-                            </tr>
-
+                            <?php foreach ($atendimento->getPedidos() as $pedido): ?>
+                                <tr class="top">
+                                    <td colspan="2" class="font-weight-bold"><?= $pedido->getProduto()->nome." (Cod. $pedido->produtos_id)"; ?></td>
+                                    <td class="text-right"><?= $pedido->date('criacao_data','H:i') ?></td>
+                                </tr>
+                                <tr class="border-bottom">
+                                    <td class="pb-2"><?= $pedido->money('valor_un') ?></td>
+                                    <td class="pb-2"><?= $pedido->quantidade ?></td>
+                                    <td class="pb-2"><?= $pedido->getSubTotal() ?></td>
+                                </tr>
+                            <?php endforeach; ?>
                         </tbody>
                     </table>
                 </div>
@@ -128,17 +66,17 @@
                                 <div class="col-4">
                                     <div class="form-group">
                                         <label for="inputQuantidade">Quantidade</label>
-                                        <input type="number" name="quantidade" class="form-control" id="inputQunatidade" min="0.01"
-                                            step="0.01" value="1">
+                                        <input type="number" name="quantidade" class="form-control" id="inputQunatidade"
+                                            min="0.01" step="0.01" value="1">
                                     </div>
                                 </div>
                             </div>
 
                         </div>
                         <div class="card-footer">
-                        <button type="reset" class="btn btn-warning"><i class="fas fa-eraser"></i> Limpar</button>
-                        <button type="submit" class="btn btn-primary float-right"><i class="fas fa-plus"></i>
-                        Adicionar</button>
+                            <button type="reset" class="btn btn-warning"><i class="fas fa-eraser"></i> Limpar</button>
+                            <button type="submit" class="btn btn-primary float-right"><i class="fas fa-plus"></i>
+                                Adicionar</button>
                         </div>
 
                     </div>

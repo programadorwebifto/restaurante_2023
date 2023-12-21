@@ -14,4 +14,12 @@ class Atendimento extends Model{
                           ];
     protected $__protected_delete = true;
     protected $__audit_date = true;
+
+    public function getPedidos(){
+        if($this->isStorage()){
+            $pedidos = new Pedido;
+            return $pedidos->where('atendimentos_id', '=', $this->id)->orderByAsc('criacao_data')->all();
+        }
+        return null;
+    }
 }

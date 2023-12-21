@@ -70,6 +70,12 @@
 		"body": ["<?php ${1} ?>"],
 		"description":"Abri e fecha um php"
 	},
+	"php:=":{
+		"scope": "php,html",
+		"prefix": "php:=",
+		"body": ["<?= \\$${1} ?>"],
+		"description":"Abri e fecha um php"
+	},
 	"phpfor":{
 		"scope": "php,html",
 		"prefix": "php:for",
