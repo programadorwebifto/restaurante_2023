@@ -3,6 +3,7 @@
 use Components\Select;
 use Core\Action;
 use Core\Component;
+use Core\Model;
 
 if(!function_exists('pre')){
     function pre($data){
@@ -50,3 +51,20 @@ if(!function_exists('assets')){
     }
 }
 
+
+
+if(!function_exists('model')){
+    /**
+     * Summary of model
+     * @param mixed $class
+     * @param mixed $id
+     * @return model
+     */
+    function model($class, $id=null){
+        if(!class_exists($class)){
+            $class = "\\Models\\$class";
+        }
+        $model = new $class($id);
+        return $model;
+    }
+}

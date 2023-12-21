@@ -1,16 +1,18 @@
 <?php
 
 namespace Models;
+
 use Core\Model;
 
-class Pagamento extends Model{
+class Pagamento extends Model
+{
     protected $table = 'pagamentos';
     protected $columns = ['id',
-                           'atendimentos_id',
-                           'pagamentos_tipos_id',
-                           'valor',
-                           'observacao',
-                          ];
+        'atendimentos_id',
+        'pagamentos_tipos_id',
+        'valor',
+        'observacao',
+    ];
     protected $__protected_delete = true;
     protected $__audit_date = true;
 }

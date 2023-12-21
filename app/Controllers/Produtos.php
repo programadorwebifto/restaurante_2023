@@ -15,7 +15,7 @@ class Produtos extends Controller
     {
         $view = new View('produtos.lista');
         $produtosModel = new Produto();
-        $view->produtos = $produtosModel->all();
+        $view->produtos = $produtosModel->orderByAsc('nome')->all();
         $view->setTitle('Cadastro de Produtos')->show();
 
     }

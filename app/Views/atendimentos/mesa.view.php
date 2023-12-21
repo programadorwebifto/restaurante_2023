@@ -57,13 +57,14 @@
                 <div class="col">
                     <a href="<?= action(\Controllers\Home::class) ?>" class="btn btn-warning btn-lg w-100 mb-2"> <i
                             class="fas fa-angle-left"></i> Voltar</a>
-                    <a href="<?= action(\Controllers\Home::class) ?>" class="btn btn-success btn-lg w-100 mb-2"> <i
-                            class="fas fa-cash-register"></i> Registrar Pagamento</a>
+                    <a href="#" class="btn btn-success btn-lg w-100 mb-2" data-toggle="modal"
+                        data-target="#registrar-pagamento"> <i class="fas fa-cash-register"></i> Registrar Pagamento</a>
                 </div>
             </div>
             <div class="row">
                 <div class="col">
-                    <form action="<?= action(\Controllers\Home::class, 'addPedido', 'POST', ['id' => $atendimento->id]) ?>"
+                    <form
+                        action="<?= action(\Controllers\Home::class, 'addPedido', 'POST', ['id' => $atendimento->id]) ?>"
                         method="POST">
                         <div class="card card-primary">
                             <div class="card-header">
@@ -103,4 +104,78 @@
             </div>
         </div>
     </div>
+</div>
+
+<div class="modal fade" id="registrar-pagamento">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-success">
+                <h4 class="modal-title"> <i class="fas fa-cash-register"></i> Registrar Pagamento</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class=" form-group col-6">
+                        <label for="">Total</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">R$</span>
+                            </div>
+                            <input type='text' class="form-control" value='<?= number_format($total, 2, ',', '.') ?>' disabled>
+                        </div>
+                    </div>
+                    <div class=" form-group col-6">
+                        <label for="">Valor Pagamento</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">R$</span>
+                            </div>
+                            <input type="number" class="form-control" value="<?= round($total,2) ?>">
+                        </div>
+                    </div>
+                    <div class=" form-group col-6">
+                        <label for="">Troco</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">R$</span>
+                            </div>
+                            <input type="text" class="form-control" value="0,00" disabled>
+                        </div>
+                    </div>
+                    <div class=" form-group col-6">
+                        <label for="">Tipo de pagamento:</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-money-check"></i></span>
+                            </div>
+                            <?php component(\Components\Select::class)
+                                    ->addAttr('class','form-control')
+                                    ->addAttr('name','pagamentos_tipos_id')
+                                    ->addModel(model('PagamentoTipo')->orderByAsc('descricao'),'id','descricao')
+                                    ->show() ?>
+                        </div>
+                    </div>
+                    <div class=" form-group col-12">
+                        <label for="">Observação:</label>
+                       <textarea name="observacao" placeholder="digite observações se forem nescessárias" class="form-control">
+
+                       </textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal"> <i
+                        class="fas fa-undo-alt"></i> Cancelar</button>
+                <form action="<?= action(\Controllers\Produtos::class, 'delete', 'POST') ?>" method="post">
+                    <input type="hidden" name="id" value="<?= $id ?>">
+                    <button type="submit" class="btn btn-outline-success"> <i class="far fa-money-bill-alt"></i>
+                        Registrar</button>
+                </form>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
 </div>

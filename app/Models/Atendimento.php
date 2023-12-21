@@ -32,4 +32,17 @@ class Atendimento extends Model{
         $pedido->save();
         return $pedido;
     }
+
+    public function addPagamento($pagamentos_tipos_id, $valor, $observacao = null){
+        $pagamento = new Pagamento();
+        $pagamento->atendimentos_id = $this->id;
+        $pagamento->valor = $valor;
+        $pagamento->pagamentos_tipos_id = $pagamentos_tipos_id;
+        if(!empty($observacao)){
+            $pagamento->observacao = $observacao;
+        }
+        $pagamento->save();
+        return $pagamento;
+
+    }
 }
