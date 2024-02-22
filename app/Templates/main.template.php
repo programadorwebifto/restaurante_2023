@@ -82,7 +82,7 @@
         </div>
 
         <!-- Sidebar Menu -->
-          <?php component(\Components\SideBar::getInstance())?>
+          <?php \Components\SideBar::getInstance()->show();?>
         <!-- /.sidebar-menu -->
       </div>
       <!-- /.sidebar -->

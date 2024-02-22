@@ -25,12 +25,19 @@ Router::post('/usuarios/buscar', \Controllers\Usuarios\Cadastro::class,'find');
 
 
 //rotas do negocio
-Router::get("/produtos", Controllers\Produtos::class);
-Router::get("/produto", Controllers\Produtos::class,'produto');
-Router::get("/produto/{id}/novo", Controllers\Produtos::class,'produto');
-Router::get("/produto/{id}/{nome_usuario}", Controllers\Produtos::class,'produto');
+////rotas produtos
+Router::get("/produtos", Controllers\Produtos::class)->addMiddleware('auth');
+Router::post('/produtos/disponivel', Controllers\Produtos::class, 'disponivel')->addMiddleware('auth');
+Router::get("/produtos/novo", Controllers\Produtos::class,'novo')->addMiddleware('auth');
+Router::get('/produto/{id}', Controllers\Produtos::class, 'edit')->addMiddleware('auth');
+Router::post('/produto', Controllers\Produtos::class, 'update')->addMiddleware('auth');
+Router::post('/produto/delete', Controllers\Produtos::class, 'delete')->addMiddleware('auth');
 
-
+////rotas atendimento
+Router::get('/mesa/{mesa}', Controllers\Home::class, 'atendimento');
+Router::post('/atendimento/{id}/pedido', Controllers\Home::class, 'addPedido');
+Router::post('/atendimento/{id}/pagamento', Controllers\Home::class, 'addPagamento');
+Router::post('/atendimento/{id}/finalizar', Controllers\Home::class, 'finalizarAtendimento');
 
 
 

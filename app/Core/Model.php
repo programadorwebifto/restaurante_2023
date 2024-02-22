@@ -2,6 +2,8 @@
 
 namespace Core;
 
+use DateTime;
+
 abstract class Model
 {
 
@@ -17,7 +19,9 @@ abstract class Model
     private $__data = [];
 
 
-    private $where = []; 
+    private $where = [];
+
+    private $orderby = [];
 
     protected $pk = 'id';
 
@@ -31,15 +35,22 @@ abstract class Model
     private $__audit_date_columns = ['create'=>'criacao_data','alter'=>'alteracao_data'];
 
     public function __construct($id = null){
-        if($this->__audit_date){
-            $this->columns = array_merge($this->columns,array_values($this->__audit_date_columns));
-        }
         if(isset($id)){
             $this->load($id);
         }
     }
+
+    private function getColumns(){
+        if($this->__audit_date){
+            $this->columns = array_merge($this->columns,array_values($this->__audit_date_columns));
+            $this->__audit_date = false;
+            
+        }
+        return $this->columns;
+    }
+
     public function __set(string $name, $value){
-        if(in_array($name,$this->columns)){
+        if(in_array($name,$this->getColumns())){
             $this->__data[$name] = $value;
         }
     }
@@ -133,9 +144,10 @@ abstract class Model
     }
 
     private function select(){
-        $columns = implode(', ',$this->columns);
+        $columns = implode(', ',$this->getColumns());
         [$where, $data] = $this->flushWhere();
-        $sql = "SELECT $columns FROM $this->table$where;";
+        $order = $this->flushOrderBy();
+        $sql = "SELECT $columns FROM $this->table$where$order;";
         return $this->query($sql,$data);
     }
     public function all()
@@ -189,6 +201,31 @@ abstract class Model
         return [$where, $data];
     }
 
+
+    public function orderByAsc($column){
+        $this->orderby($column);
+        return $this;
+    }   
+    public function orderByDesc($column){
+        $this->orderby($column,'DESC');
+        return $this;
+    }   
+
+    private function orderby($column, $order = 'ASC'){
+        $this->orderby[] = ['column' => $column, 'order' => $order];
+    }
+
+    private function flushOrderBy(){
+        $sql = '';
+        $comma = ' ORDER BY';
+        foreach($this->orderby as $order){
+            $sql .= "$comma {$order['column']} {$order['order']}";
+            $comma = ',';
+        }
+        
+        return $sql;
+    }
+
     public function getData(){
         return $this->__data;
     }
@@ -197,4 +234,11 @@ abstract class Model
         return $this->__storage;
     }
 
+    public function date($column,$format = 'H:i:s d/m/Y'){
+        return (new DateTime($this->$column))->format($format);
+    }
+
+    public function money($column, $decimals = 2, $decimal_separator = ",", $thousands_separator = ".", $prefix = 'R$ '){
+        return $prefix . number_format($this->$column, $decimals, $decimal_separator, $thousands_separator);
+    }   
 }

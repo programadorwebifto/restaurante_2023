@@ -1,28 +1,23 @@
-<div class="row">
-    <div class="col-12">
-        <!-- Default box -->
-        <div class="card">
-            <div class="card-header">
-                <h3 class="card-title">Home</h3>
-
-                <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                        <i class="fas fa-minus"></i>
-                    </button>
-                    <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
-                        <i class="fas fa-times"></i>
-                    </button>
+<div class="container-fluid">
+    <div class="row">
+        <?php for ($mesa = 1; $mesa <= N_MESAS; $mesa++):
+            $status = (array_key_exists($mesa, $mesas)) ? 'ocupada' : 'livre';    
+        ?>
+            <div class="col-sm-6 col-md-4 col-lg-3 col-xl-2" >
+                <!-- Default box -->
+                <div class="card card-outline card-<?=($status == 'livre')?'danger':'success'?> text-center">
+                    <div class="card-body">
+                        <h3>Mesa <?php echo $mesa ?></h3>
+                        <img src="<?= assets("images/mesas/$status.png") ?>">
+                    </div>
+                    <!-- /.card-body -->
+                    <div class="card-footer">
+                        <a href="<?= action(\Controllers\Home::class,'atendimento','GET',['mesa'=>$mesa])?>" class="btn btn-primary"><i class="fas fa-bars"></i></a>
+                    </div>
+                    <!-- /.card-footer-->
                 </div>
+                <!-- /.card -->
             </div>
-            <div class="card-body">
-                Tela inicial do sistema
-            </div>
-            <!-- /.card-body -->
-            <div class="card-footer">
-                Footer
-            </div>
-            <!-- /.card-footer-->
-        </div>
-        <!-- /.card -->
+        <?php endfor; ?>
     </div>
 </div>
